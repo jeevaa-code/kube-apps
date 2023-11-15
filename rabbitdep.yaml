@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: rabbit-deployment
+  labels:
+    app: vprofileapp
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels:
+      name: rabbitmq01
+  template:
+    metadata:
+      labels:
+        name: rabbitmq01
+    spec:
+      containers:
+        - name: rabbit-container
+          image: rabbitmq
+          ports: 
+            -  name: rabbit-port
+               containerPort: 15672
+          env:
+            -  name: RABBITMQ_DEFAULT_PASS
+               valueFrom:
+                 secretKeyRef:
+                   name: appsecret
+                   key: rm_pass
+            -  name: RABBITMQ_DEFAULT_USER
+               value: "guest" 
+
+            
+        

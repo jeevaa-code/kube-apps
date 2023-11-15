@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memdeployment
+  labels:
+    app: vprofileapp
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      name: memcache01
+  template:
+    metadata:
+      labels:
+        name: memcache01
+    spec: 
+      containers:
+        - name: memcache-container
+          image: memcache
+          ports:
+            - name: memcache-ports
+              containerPort: 11211
