@@ -1,34 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db_deployment
-  label:
+  name: db-deployment
+  labels:
     app: vprofileapp
 spec:
   replicas: 1
-  selector: 
+  selector:
     matchLabels:
       name: dbvprofileapp
   template:
     metadata:
-      name: dbvprofileapp
+      labels:
+        name: dbvprofileapp
     spec:
       containers:
-        - name: mysql_container
+        - name: mysql-container
           image: jeevaa21/db01
-          volumeMounts: 
+          volumeMounts:
             - mountPath: /var/lib/mysql
               name: dbvol
           ports:
-            - name: mysql_port
+            - name: mysql-port
               containerPort: 3306
-          env: 
+          env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: appsecret
                   key: db_pass
-      nodeSelector: 
+      nodeSelector:
         zone: ap-south-1a
       volumes:
         - name: dbvol
